@@ -50,25 +50,33 @@ class BudgetActivity : AppCompatActivity() {
         val date = Calendar.getInstance()
 
         // Set to the last ms at the end of the month
-        val dateMonthEndMs = CalendarUtil.getEndOfMonthMs(date[Calendar.YEAR],
-                date[Calendar.MONTH])
+        val dateMonthEndMs = CalendarUtil.getEndOfMonthMs(
+            date[Calendar.YEAR],
+            date[Calendar.MONTH]
+        )
 
         // Set to beginning of the month
-        val dateMonthStartMs = CalendarUtil.getStartOfMonthMs(date[Calendar.YEAR],
-                date[Calendar.MONTH])
-        val b = intent.extras
+        val dateMonthStartMs = CalendarUtil.getStartOfMonthMs(
+            date[Calendar.YEAR],
+            date[Calendar.MONTH]
+        )
+        val b = intent.extras//data passed
+
         val budgetStartMs = b?.getLong("budgetStart", dateMonthStartMs) ?: dateMonthStartMs
         val budgetEndMs = b?.getLong("budgetEnd", dateMonthEndMs) ?: dateMonthEndMs
         date.timeInMillis = budgetStartMs
         val budgetStartString = DateFormat.getDateInstance(DateFormat.SHORT).format(date.time)
         date.timeInMillis = budgetEndMs
+
         val budgetEndString = DateFormat.getDateInstance(DateFormat.SHORT).format(date.time)
         val dateRangeFormat = resources.getString(R.string.dateRangeFormat)
         val dateRangeString = String.format(dateRangeFormat, budgetStartString, budgetEndString)
         val dateRangeField = findViewById<View>(R.id.dateRange) as TextView
+
+
         dateRangeField.text = dateRangeString
         val budgets = _db!!.getBudgets(budgetStartMs, budgetEndMs)
-        val budgetListAdapter = BudgetAdapter(this, budgets)
+        val budgetListAdapter = BudgetAdapter(this, budgets)//cloumns getting  rows
         budgetList.adapter = budgetListAdapter
         registerForContextMenu(budgetList)
         budgetList.onItemClickListener = OnItemClickListener { parent, view, position, id ->
@@ -87,7 +95,8 @@ class BudgetActivity : AppCompatActivity() {
         setupTotalEntry(budgets, blankBudget)
     }
 
-    private fun setupTotalEntry(budgets: List<Budget>, blankBudget: Budget) {
+    private fun setupTotalEntry(budgets: List<Budget>, blankBudget: Budget)
+    {
         val budgetName = findViewById<View>(R.id.budgetName) as TextView
         val budgetValue = findViewById<View>(R.id.budgetValue) as TextView
         val budgetBar = findViewById<View>(R.id.budgetBar) as ProgressBar
@@ -121,6 +130,7 @@ class BudgetActivity : AppCompatActivity() {
             if (budget != null && item.itemId == R.id.action_edit) {
                 val i = Intent(applicationContext, BudgetViewActivity::class.java)
                 val bundle = Bundle()
+
                 bundle.putString("id", budget.name)
                 bundle.putBoolean("view", true)
                 i.putExtras(bundle)
@@ -145,31 +155,46 @@ class BudgetActivity : AppCompatActivity() {
             return true
         }
         if (id == R.id.action_calendar) {
+
             val builder = AlertDialog.Builder(this)
-            builder.setTitle(R.string.budgetDateRangeHelp)
-            val view = layoutInflater.inflate(R.layout.budget_date_picker_layout, null, false)
+            builder.setTitle("Select date range to display for budgets")
+                        val view = layoutInflater.inflate(R.layout.budget_date_picker_layout, null, false)
             builder.setView(view)
-            builder.setNegativeButton(R.string.cancel) { dialog, which -> dialog.cancel() }
-            builder.setPositiveButton(R.string.set, DialogInterface.OnClickListener { dialog, which ->
-                val startDatePicker = view.findViewById<View>(R.id.startDate) as DatePicker
-                val endDatePicker = view.findViewById<View>(R.id.endDate) as DatePicker
-                val startOfBudgetMs = CalendarUtil.getStartOfDayMs(startDatePicker.year,
-                        startDatePicker.month, startDatePicker.dayOfMonth)
-                val endOfBudgetMs = CalendarUtil.getEndOfDayMs(endDatePicker.year,
-                        endDatePicker.month, endDatePicker.dayOfMonth)
-                if (startOfBudgetMs > endOfBudgetMs) {
-                    Toast.makeText(this@BudgetActivity, R.string.startDateAfterEndDate, Toast.LENGTH_LONG).show()
-                    return@OnClickListener
-                }
-                val intent = Intent(this@BudgetActivity, BudgetActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME
-                val bundle = Bundle()
-                bundle.putLong("budgetStart", startOfBudgetMs)
-                bundle.putLong("budgetEnd", endOfBudgetMs)
-                intent.putExtras(bundle)
-                startActivity(intent)
-                finish()
-            })
+            builder.setNegativeButton(R.string.cancel)
+            { dialog, which ->
+                dialog.cancel()
+            }
+            builder.setPositiveButton(
+                R.string.set,
+                DialogInterface.OnClickListener { dialog, which ->
+                    val startDatePicker = view.findViewById<View>(R.id.startDate) as DatePicker
+                    val endDatePicker = view.findViewById<View>(R.id.endDate) as DatePicker
+                    val startOfBudgetMs = CalendarUtil.getStartOfDayMs(
+                        startDatePicker.year,
+                        startDatePicker.month, startDatePicker.dayOfMonth
+                    )
+                    val endOfBudgetMs = CalendarUtil.getEndOfDayMs(
+                        endDatePicker.year,
+                        endDatePicker.month, endDatePicker.dayOfMonth
+                    )
+                    if (startOfBudgetMs > endOfBudgetMs) {
+                        Toast.makeText(
+                            this@BudgetActivity,
+                            R.string.startDateAfterEndDate,
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return@OnClickListener
+                    }
+                    val intent = Intent(this@BudgetActivity, BudgetActivity::class.java)
+                    intent.flags =
+                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_TASK_ON_HOME
+                    val bundle = Bundle()
+                    bundle.putLong("budgetStart", startOfBudgetMs)
+                    bundle.putLong("budgetEnd", endOfBudgetMs)
+                    intent.putExtras(bundle)
+                    startActivity(intent)
+                    finish()
+                })
             builder.show()
             return true
         }
