@@ -18,11 +18,12 @@ class CsvDatabaseExporter : DatabaseExporter {
     override fun exportData(
         context: Context?, db: DBHelper?, startTimeMs: Long?,
         endTimeMs: Long?, outStream: OutputStream?, updater: ImportExportProgressUpdater?
-    ) {
+    )
+    {
 
-        val stream = OutputStreamWriter(outStream, Charsets.UTF_8)
-        val output = BufferedWriter(stream)
-        val printer = CSVPrinter(output, CSVFormat.RFC4180)
+        val stream = OutputStreamWriter(outStream, Charsets.UTF_8)//character writes into a file
+        val output = BufferedWriter(stream)//writes the output of stream file
+        val printer = CSVPrinter(output, CSVFormat.RFC4180)//
         var numEntries = 0
         val budgetNames = db!!.budgetNames
         numEntries += budgetNames.size
@@ -112,13 +113,13 @@ class CsvDatabaseExporter : DatabaseExporter {
                     "",  // blank description
                     "",  // blank account
                     "",  // blank budget (handled in id field)
-                    budget!!.max,
+                    budget.max,
                     "",  // blank note
                     "",  // blank date
                     "",  // blank formatted date
                     ""
                 ) // blank receipt
-                updater!!.update()
+                updater.update()
                 if (Thread.currentThread().isInterrupted) {
                     throw InterruptedException()
                 }
@@ -127,8 +128,9 @@ class CsvDatabaseExporter : DatabaseExporter {
             printer.close()
         }
     }
-
     companion object {
         private const val DATE_FORMATTED_FIELD = "date_formatted"
+            private const val TAG = "BudgetWatch"
+        }
+
     }
-}
