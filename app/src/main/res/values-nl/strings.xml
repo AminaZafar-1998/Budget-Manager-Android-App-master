@@ -101,15 +101,6 @@
     <string name="iconDescription">Budgetbeheer-pictogram</string>
     <string name="addExpenseDescription">Uitgave toevoegen</string>
 
-    <string name="about">Over</string>
-    <string name="app_copyright_fmt">Copyright 2016-<xliff:g>%d</xliff:g>Branden Archer</string>
-    <string name="app_license">Uitgebracht onder de GPLv3-licentie.</string>
-    <string name="about_title_fmt">Over <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Versie: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_revision_fmt">Versie-informatie: <xliff:g id="app_revision_url">%s</xliff:g></string>
-    <string name="app_libraries"><xliff:g id="app_name">%s</xliff:g> gebruikt de volgende bibliotheken van derde partijen: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources"><xliff:g id="app_name">%s</xliff:g> gebruikt de volgende bronnen van derde partijen: <xliff:g id="app_resources_list">%s</xliff:g></string>
-
     <string name="settings">Instellingen</string>
     <string name="receiptQuality">Kwaliteit van de bon</string>
     <string name="receiptQualitySummary">Selecteer de te gebruiken JPEG-kwaliteit voor het nemen van foto\'s</string>
