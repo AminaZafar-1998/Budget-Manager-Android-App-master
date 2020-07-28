@@ -1,3 +1,4 @@
+@file:Suppress("DEPRECATION")
 
 package protect.budgetwatch
 
@@ -8,7 +9,8 @@ import android.os.Environment
 import android.util.Log
 import java.io.File
 
-internal abstract class DatabaseCleanupTask : AsyncTask<Void?, Void?, Void?> {
+internal class DatabaseCleanupTask : AsyncTask<Void?, Void?, Void?> {
+
     private val activity: Activity
     private val receiptPurgeCutoff: Long?
     private var progress: ProgressDialog? = null
@@ -40,8 +42,8 @@ internal abstract class DatabaseCleanupTask : AsyncTask<Void?, Void?, Void?> {
                 Log.i(TAG, "Failed to delete old receipt from transaction: " + transaction.id)
             }
             db.updateTransaction(transaction.id, transaction.type, transaction.description,
-                    transaction.account, transaction.budget, transaction.value, transaction.note,
-                    transaction.dateMs,  /* no receipt */"")
+                transaction.account, transaction.budget, transaction.value, transaction.note,
+                transaction.dateMs,  /* no receipt */"")
         }
         cursor.close()
     }
@@ -57,8 +59,8 @@ internal abstract class DatabaseCleanupTask : AsyncTask<Void?, Void?, Void?> {
                     // the receipt image, but can update database to remove
                     // the receipt from the transaction
                     db.updateTransaction(transaction.id, transaction.type, transaction.description,
-                            transaction.account, transaction.budget, transaction.value, transaction.note,
-                            transaction.dateMs,  /* no receipt */"")
+                        transaction.account, transaction.budget, transaction.value, transaction.note,
+                        transaction.dateMs,  /* no receipt */"")
                     Log.i(TAG, "Transaction " + transaction.id + " listed a receipt but it is missing, " +
                             "removing receipt")
                 }
@@ -69,7 +71,7 @@ internal abstract class DatabaseCleanupTask : AsyncTask<Void?, Void?, Void?> {
 
     private fun deleteOrphanedReceipts(db: DBHelper) {
         val imageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        if (imageDir == null || imageDir.exists() == false) {
+        if (imageDir == null || !imageDir.exists()) {
             // There are no images to cleanup
             return
         }
@@ -103,10 +105,7 @@ internal abstract class DatabaseCleanupTask : AsyncTask<Void?, Void?, Void?> {
         }
         cursor.close()
     }
-
-
-    @Override
-    fun doInBackground(vararg nothing: Void): Void? {
+    override fun doInBackground(vararg params: Void?): Void? {
         val db = DBHelper(activity)
         if (receiptPurgeCutoff != null) {
             removeOldReceiptsFromTransactions(db)
@@ -116,6 +115,7 @@ internal abstract class DatabaseCleanupTask : AsyncTask<Void?, Void?, Void?> {
         db.close()
         return null
     }
+
 
     override fun onPostExecute(result: Void?) {
         progress!!.dismiss()
@@ -130,5 +130,4 @@ internal abstract class DatabaseCleanupTask : AsyncTask<Void?, Void?, Void?> {
     companion object {
         private const val TAG = "BudgetWatch"
     }
-
 }
