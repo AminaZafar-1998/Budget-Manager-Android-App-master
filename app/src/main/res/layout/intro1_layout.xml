@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
+              android:orientation="vertical" android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#E41DB8CC"
               android:layout_weight="10"
@@ -14,12 +13,11 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:layout_weight="3"
-
         android:textColor="#05011B"
         android:paddingRight="32dp"
         android:textSize="28sp"
-        android:text="Welcome to Budget
-                               Tracker application "/>
+        android:text="Welcome to Our
+                       Budgets"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -34,7 +32,7 @@
             android:layout_gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:src="@drawable/app_icon_intro"/>
+            android:src="@drawable/intro2_image"/>
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
@@ -43,10 +41,11 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="#05011B"
-        android:paddingLeft="64dp"
+        android:paddingLeft="50dp"
         android:paddingRight="64dp"
         android:textSize="20sp"
-        android:text="Manage Your Budget"/>
+        android:text="U May CreaTe BudgeTS As U Want...
+          Just Tap At ThE  RighT Corner Icon in the Budgets Background Menu"/>
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="64dp" />
