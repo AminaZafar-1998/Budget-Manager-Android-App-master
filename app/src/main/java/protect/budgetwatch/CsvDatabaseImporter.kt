@@ -67,7 +67,8 @@ class CsvDatabaseImporter : DatabaseImporter {
         if (record.isMapped(key)) {
             toReturn = record[key]
         } else {
-            if (defaultValue == null) {
+            if (defaultValue == null)
+            {
                 throw FormatException("Field not used but expected: $key")
             }
         }
