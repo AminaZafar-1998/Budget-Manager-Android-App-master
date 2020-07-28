@@ -101,12 +101,6 @@
     <string name="iconDescription">BudgetWatch Icon</string>
     <string name="addExpenseDescription">Eine Ausgabentransaktion hinzufügen</string>
 
-    <string name="about">Über</string>
-    <string name="app_copyright_fmt">Copyright 2016-<xliff:g>%d</xliff:g> Branden Archer</string>
-    <string name="app_license">Lizenziert unter der GPLv3.</string>
-    <string name="about_title_fmt">Über <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Version: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_revision_fmt">Release-Informationen: <xliff:g id="app_revision_url">%s</xliff:g></string>
     <string name="app_libraries"><xliff:g id="app_name">%s</xliff:g> benutzt die folgenden Dritt-Anbieter-Bibliotheken: <xliff:g id="app_libraries_list">%s</xliff:g></string>
     <string name="settings">Einstellungen</string>
     <string name="receiptQuality">Quittungsqualität</string>
