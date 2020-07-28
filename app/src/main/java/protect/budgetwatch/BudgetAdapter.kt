@@ -8,10 +8,11 @@ import android.widget.ArrayAdapter
 import android.widget.ProgressBar
 import android.widget.TextView
 
-internal class BudgetAdapter(context: Context, items: List<Budget?>?) : ArrayAdapter<Budget?>(context, 0, items!!) {
+internal class
+BudgetAdapter(context: Context, items: List<Budget?>?) : ArrayAdapter<Budget?>(context, 0, items!!) {
     private val FRACTION_FORMAT: String
 
-    internal class ViewHolder {
+   internal class ViewHolder {
         var budgetName: TextView? = null
         var budgetBar: ProgressBar? = null
         var budgetValue: TextView? = null
@@ -24,7 +25,8 @@ internal class BudgetAdapter(context: Context, items: List<Budget?>?) : ArrayAda
         val holder: ViewHolder
 
         // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
+        if (convertView == null)
+        {
             convertView = LayoutInflater.from(context).inflate(R.layout.budget_layout,
                     parent, false)
             holder = ViewHolder()
@@ -32,7 +34,9 @@ internal class BudgetAdapter(context: Context, items: List<Budget?>?) : ArrayAda
             holder.budgetBar = convertView.findViewById<View>(R.id.budgetBar) as ProgressBar
             holder.budgetValue = convertView.findViewById<View>(R.id.budgetValue) as TextView
             convertView.tag = holder
-        } else {
+        }
+        else
+        {
             holder = convertView.tag as ViewHolder
         }
         holder.budgetName!!.text = item!!.name
