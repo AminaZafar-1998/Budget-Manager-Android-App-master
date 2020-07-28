@@ -1,6 +1,5 @@
 package protect.budgetwatch
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.snackbar.Snackbar
 
-class BudgetViewActivity : AppCompatActivity() {
+class BudgetViewActivity : AppCompatActivity()
+{
     private var _db: DBHelper? = null
     private var _budgetNameEdit: EditText? = null
     private var _budgetNameView: TextView? = null
@@ -42,13 +42,13 @@ class BudgetViewActivity : AppCompatActivity() {
         _viewBudget = b != null && b.getBoolean("view", false)
     }
 
-    @SuppressLint("DefaultLocale")
+
     public override fun onResume() {
         super.onResume()
         if (_updateBudget || _viewBudget) {
-            (if (_updateBudget) _budgetNameEdit else _budgetNameView)!!.text = _budgetName
+            (if (_updateBudget) _budgetNameEdit else _budgetNameView)!!.text = _budgetName///BUDGET NAME
             val existingBudget = _db!!.getBudgetStoredOnly(_budgetName!!)
-            (if (_updateBudget) _valueEdit else _valueView)!!.text = String.format("%d", existingBudget!!.max)
+            (if (_updateBudget) _valueEdit else _valueView)!!.text = String.format("%d", existingBudget!!.max)//BUGET VAUE
             if (_updateBudget) {
                 setTitle(R.string.editBudgetTitle)
                 _budgetNameView!!.visibility = View.GONE
@@ -58,8 +58,9 @@ class BudgetViewActivity : AppCompatActivity() {
                 _valueEdit!!.visibility = View.GONE
                 setTitle(R.string.viewBudgetTitle)
             }
-        } else {
-            setTitle(R.string.addBudgetTitle)
+        }
+        else {
+            setTitle("Add Budget")
             _budgetNameView!!.visibility = View.GONE
             _valueView!!.visibility = View.GONE
         }
@@ -136,11 +137,11 @@ class BudgetViewActivity : AppCompatActivity() {
         if (id == R.id.action_save) {
             doSave()
             return true
-        }
+           }
         if (id == android.R.id.home) {
             finish()
             return true
-        }
+            }
         return super.onOptionsItemSelected(item)
     }
 
@@ -148,7 +149,6 @@ class BudgetViewActivity : AppCompatActivity() {
         _db!!.close()
         super.onDestroy()
     }
-
     companion object {
         private const val TAG = "BudgetWatch"
     }
