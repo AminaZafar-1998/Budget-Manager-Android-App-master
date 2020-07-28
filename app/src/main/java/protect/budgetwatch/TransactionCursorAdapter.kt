@@ -62,6 +62,7 @@ internal class TransactionCursorAdapter(context: Context?, cursor: Cursor?) : Cu
             holder.noteLayout!!.visibility = View.GONE
             holder.note!!.text = ""
         } else {
+
             holder.noteLayout!!.visibility = View.VISIBLE
             holder.note!!.text = transaction.note
         }
