@@ -1,5 +1,5 @@
+@file:Suppress("DEPRECATION")
 package protect.budgetwatch
-
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
@@ -10,28 +10,28 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-
-import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.google.common.collect.ImmutableMap
 import protect.budgetwatch.CalendarUtil.getEndOfDayMs
 import protect.budgetwatch.CalendarUtil.getStartOfDayMs
-import protect.budgetwatch.ImportExportActivity
 import protect.budgetwatch.ImportExportTask.TaskCompleteListener
 import java.io.*
-
 import java.text.DateFormat
 import java.util.*
 
-class ImportExportActivity : AppCompatActivity() {
+class
+ImportExportActivity : AppCompatActivity()
+{
+
     private var importExporter: ImportExportTask? = null
     private var _fileFormatMap: Map<String, DataFormat>? = null
     private var exportStartDateMs: Long? = null
@@ -62,20 +62,23 @@ class ImportExportActivity : AppCompatActivity() {
         // If the application does not have permissions to external
         // storage, ask for it now
         if (Build.VERSION.SDK_INT >= 23) {
+
             if (ContextCompat.checkSelfPermission(this@ImportExportActivity,
                             Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                     ContextCompat.checkSelfPermission(this@ImportExportActivity,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                ActivityCompat.requestPermissions(this@ImportExportActivity, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        PERMISSIONS_EXTERNAL_STORAGE)
-            }
-        }
+                        PERMISSIONS_EXTERNAL_STORAGE)    } }
+
         val dateRangeButton = findViewById<View>(R.id.dateRangeSelectButton) as Button
         dateRangeButton.setOnClickListener(View.OnClickListener {
             val builder = AlertDialog.Builder(this@ImportExportActivity)
             builder.setTitle(R.string.exportDateRangeHelp)
-            val datePickerView = layoutInflater.inflate(R.layout.budget_date_picker_layout, null, false)
+            val datePickerView = layoutInflater
+                .inflate(R.layout.budget_date_picker_layout, null, false)
+
+
             builder.setView(datePickerView)
             builder.setNegativeButton(R.string.cancel) { dialog, which -> dialog.cancel() }
             builder.setPositiveButton(R.string.set, DialogInterface.OnClickListener { dialog, which ->
@@ -85,8 +88,10 @@ class ImportExportActivity : AppCompatActivity() {
                         startDatePicker.month, startDatePicker.dayOfMonth)
                 val endDateMs = getEndOfDayMs(endDatePicker.year,
                         endDatePicker.month, endDatePicker.dayOfMonth)
-                if (startDateMs > endDateMs) {
-                    Toast.makeText(this@ImportExportActivity, R.string.startDateAfterEndDate, Toast.LENGTH_LONG).show()
+                if (startDateMs > endDateMs)
+                {
+                    Toast.makeText(this@ImportExportActivity, R.string.startDateAfterEndDate,
+                        Toast.LENGTH_LONG).show()
                     return@OnClickListener
                 }
                 exportStartDateMs = startDateMs
@@ -103,14 +108,17 @@ class ImportExportActivity : AppCompatActivity() {
             })
             builder.show()
         })
+
+        //export Button
         val exportButton = findViewById<View>(R.id.exportButton) as Button
         exportButton.setOnClickListener { startExport(getSelectedFormat(R.id.exportFileFormatSpinner)) }
 
-
+//file system button
         // Check that there is an activity that can bring up a file chooser
         val intentPickAction = Intent(Intent.ACTION_PICK)
         val importFilesystem = findViewById<View>(R.id.importOptionFilesystemButton) as Button
-        importFilesystem.setOnClickListener { chooseFileWithIntent(intentPickAction) }
+        importFilesystem.setOnClickListener { chooseFileWithIntent(intentPickAction)
+        }
         if (isCallable(applicationContext, intentPickAction) == false) {
             findViewById<View>(R.id.dividerImportFilesystem).visibility = View.GONE
             findViewById<View>(R.id.importOptionFilesystemTitle).visibility = View.GONE
@@ -118,7 +126,7 @@ class ImportExportActivity : AppCompatActivity() {
             importFilesystem.visibility = View.GONE
         }
 
-
+        //import from apllication button
         // Check that there is an application that can find content
         val intentGetContentAction = Intent(Intent.ACTION_GET_CONTENT)
         intentGetContentAction.addCategory(Intent.CATEGORY_OPENABLE)
@@ -132,7 +140,7 @@ class ImportExportActivity : AppCompatActivity() {
             importApplication.visibility = View.GONE
         }
 
-
+        // export location button
         // This option, to import from the fixed location, should always be present
         val importButton = findViewById<View>(R.id.importOptionFixedButton) as Button
         importButton.setOnClickListener {
@@ -156,6 +164,7 @@ class ImportExportActivity : AppCompatActivity() {
         return _fileFormatMap!![name]
     }
 
+    //for use export location
     private fun startImport(format: DataFormat?, target: InputStream, targetUri: Uri) {
         var format = format
         val listener = object : TaskCompleteListener {
@@ -220,6 +229,7 @@ class ImportExportActivity : AppCompatActivity() {
             }
         }
     }
+
 
     override fun onDestroy() {
         if (importExporter != null && importExporter!!.status != AsyncTask.Status.RUNNING) {
@@ -294,7 +304,11 @@ class ImportExportActivity : AppCompatActivity() {
         if (success) {
             val sendLabel = this@ImportExportActivity.resources.getText(R.string.sendLabel)
             builder.setPositiveButton(sendLabel) { dialog, which ->
-                val outputUri = FileProvider.getUriForFile(this@ImportExportActivity, BuildConfig.APPLICATION_ID, path)
+                val outputUri = FileProvider.getUriForFile(
+                    this@ImportExportActivity,
+                    "protect.budgetwatch.fileprovider",
+                    path)
+
                 val sendIntent = Intent(Intent.ACTION_SEND)
                 sendIntent.putExtra(Intent.EXTRA_STREAM, outputUri)
                 sendIntent.type = format!!.mimetype()
@@ -348,8 +362,7 @@ class ImportExportActivity : AppCompatActivity() {
             reader = (if (uri.scheme != null) {
                 contentResolver.openInputStream(uri)
             } else {
-                FileInputStream(File(uri.toString()))
-            })!!
+                FileInputStream(File(uri.toString())) })!!
             Log.e(TAG, "Starting file import with: $uri")
             startImport(null, reader, uri)
         } catch (e: FileNotFoundException) {
@@ -359,7 +372,7 @@ class ImportExportActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "BudgetWatch"
+                   private const val TAG = "BudgetWatch"
         private const val PERMISSIONS_EXTERNAL_STORAGE = 1
         private const val CHOOSE_EXPORT_FILE = 2
     }
