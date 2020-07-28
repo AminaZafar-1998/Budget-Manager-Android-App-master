@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,10 +13,12 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import protect.budgetwatch.DBHelper
-import protect.budgetwatch.ShortcutConfigure
 import java.util.*
 
+@Suppress("DEPRECATION")
 class ShortcutConfigure : AppCompatActivity() {
     internal class ShortcutOption {
         var name: String? = null
