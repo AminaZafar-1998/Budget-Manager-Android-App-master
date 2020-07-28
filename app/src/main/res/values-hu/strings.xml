@@ -101,15 +101,7 @@
     <string name="iconDescription">Költségvetés-figyelő ikonja</string>
     <string name="addExpenseDescription">Kiadási tranzakció hozzáadása</string>
 
-    <string name="about">Névjegy</string>
-    <string name="app_copyright_fmt">Copyright 2016-<xliff:g>%d</xliff:g> Branden Archer</string>
-    <string name="app_license">GPLv3 szerint licencelt.</string>
-    <string name="about_title_fmt"><xliff:g id="app_name">%s</xliff:g> névjegye</string>
-    <string name="debug_version_fmt">Verzió: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_revision_fmt">Felülvizsgálati információk: <xliff:g id="app_revision_url">%s</xliff:g></string>
-    <string name="app_libraries">A <xliff:g id="app_name">%s</xliff:g> a következő harmadik féltől származó programkönyvtárakat használja: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources">A <xliff:g id="app_name">%s</xliff:g> a következő harmadik féltől származó erőforrásokat használja: <xliff:g id="app_resources_list">%s</xliff:g></string>
-
+    
     <string name="settings">Beállítások</string>
     <string name="receiptQuality">Nyugta minősége</string>
     <string name="receiptQualitySummary">A nyugtaképek rögzítésekor használt JPEG minőség kiválasztása</string>
