@@ -1,34 +1,27 @@
 package protect.budgetwatch
 
+
 import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-
-
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabItem
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
-import com.google.android.material.snackbar.Snackbar
-import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
-
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-
-import android.widget.SearchView
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
-
+import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
 import protect.budgetwatch.CalendarUtil.getEndOfDayMs
 import protect.budgetwatch.DBHelper
-import protect.budgetwatch.TransactionActivity
 
 class TransactionActivity : AppCompatActivity() {
     private var _dbChanged: TransactionDatabaseChangedReceiver? = null
@@ -122,8 +115,8 @@ class TransactionActivity : AppCompatActivity() {
                 val endDatePicker = view.findViewById<View>(R.id.endDate) as DatePicker
                 val endOfBudgetMs = getEndOfDayMs(endDatePicker.year,
                         endDatePicker.month, endDatePicker.dayOfMonth)
-                val task = DatabaseCleanupTask(this , endOfBudgetMs)
-                task.execute()
+              //  val task = DatabaseCleanupTask(this , endOfBudgetMs)
+                //task.execute()
             }
             builder.show()
             return true
