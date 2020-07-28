@@ -1,8 +1,10 @@
+@file:Suppress("DEPRECATION", "DEPRECATION")
+
 package protect.budgetwatch
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.ProgressDialog
@@ -15,24 +17,20 @@ import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import androidx.preference.PreferenceManager
 import android.provider.MediaStore
-
-import com.google.android.material.snackbar.Snackbar
-
-import androidx.appcompat.widget.Toolbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
-import android.app.AlertDialog
-import androidx.fragment.app.Fragment
-
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.preference.PreferenceManager
+import com.google.android.material.snackbar.Snackbar
 import protect.budgetwatch.DBHelper
 import protect.budgetwatch.ReceiptViewActivity
 import protect.budgetwatch.TransactionViewActivity
@@ -167,7 +165,7 @@ class TransactionViewActivity : AppCompatActivity() {
                 val month = date[Calendar.MONTH]
                 val day = date[Calendar.DATE]
                 val datePicker = DatePickerDialog(this@TransactionViewActivity,
-                        dateSetListener, year, month, day)
+                    dateSetListener, year, month, day)
                 datePicker.show()
             }
         }
@@ -262,14 +260,13 @@ class TransactionViewActivity : AppCompatActivity() {
         }
         val captureCallback = View.OnClickListener {
             if (ContextCompat.checkSelfPermission(this@TransactionViewActivity,
-                            Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 captureReceipt()
             }
             else
             {
-                Activity
-                    .requestPermissions(this@TransactionViewActivity, arrayOf(Manifest.permission.CAMERA),
-                        PERMISSIONS_REQUEST_CAMERA)
+                ActivityCompat.requestPermissions(this@TransactionViewActivity, arrayOf(Manifest.permission.CAMERA),
+                    PERMISSIONS_REQUEST_CAMERA)
             }
         }
         _captureButton!!.setOnClickListener(captureCallback)
@@ -335,10 +332,10 @@ class TransactionViewActivity : AppCompatActivity() {
         }
         if (_updateTransaction) {
             _db!!.updateTransaction(_transactionId, _type, name, account,
-                    budget, value, note, dateMs, receipt)
+                budget, value, note, dateMs, receipt)
         } else {
             _db!!.insertTransaction(_type, name, account, budget,
-                    value, note, dateMs, receipt)
+                value, note, dateMs, receipt)
         }
         finish()
     }
@@ -357,7 +354,7 @@ class TransactionViewActivity : AppCompatActivity() {
         if (packageManager == null) {
             Log.e(TAG, "Failed to get package manager, cannot take picture")
             Toast.makeText(applicationContext, R.string.pictureCaptureError,
-                    Toast.LENGTH_LONG).show()
+                Toast.LENGTH_LONG).show()
             return
         }
         if (takePictureIntent.resolveActivity(packageManager) == null) {
@@ -365,24 +362,30 @@ class TransactionViewActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, R.string.pictureCaptureError, Toast.LENGTH_LONG).show()
             return
         }
-        val imageLocation = newImageLocation
-        val imageUri: Uri
 
+        val imageLocation: File? = getNewImageLocation()
+        val imageUri: Uri
         // Starting in Android N (24+) sharing a file Uri is discouraged or prevented.
         // For those platforms a FileProvider is used to provide a content Uri. Older
         // platforms still use the file Uri, in part to also allow easier testing
         // using Robolectric.
-        imageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, imageLocation!!)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            imageUri = FileProvider.getUriForFile(
+                this,
+                "protect.budgetwatch.fileprovider",
+                imageLocation!!)
+
         } else {
-            Uri.fromFile(imageLocation)
-        }
+        imageUri = Uri.fromFile(imageLocation)
+    }
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        capturedUncommittedReceipt = imageLocation?.absolutePath
+        capturedUncommittedReceipt =
+            imageLocation?.absolutePath
         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
     }
 
-    override fun onDestroy() {
+    override fun onDestroy()
+    {
         if (capturedUncommittedReceipt != null) {
             // The receipt was captured but never used
             Log.i(TAG, "Deleting unsaved image: $capturedUncommittedReceipt")
@@ -446,8 +449,8 @@ class TransactionViewActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private val newImageLocation: File?
-        private get() {
+    private fun getNewImageLocation(): File?
+   {
             val imageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             if (imageDir == null) {
                 Log.e(TAG, "Failed to locate directory for pictures")
@@ -467,7 +470,7 @@ class TransactionViewActivity : AppCompatActivity() {
 
     private fun reencodeImageWithQuality(original: String?, quality: Int): Boolean {
         val destFile = File(original)
-        val tmpLocation = newImageLocation
+        val tmpLocation = getNewImageLocation()
         try {
             if (tmpLocation == null) {
                 throw IOException("Could not create location for tmp file")
@@ -542,7 +545,7 @@ class TransactionViewActivity : AppCompatActivity() {
                     }
 
                     protected override fun doInBackground(vararg p0: Void?): Boolean? {
-                        return reencodeImageWithQuality(capturedUncommittedReceipt, JPEG_QUALITY_LEVEL)
+                        return reencodeImageWithQuality(capturedUncommittedReceipt, JPEG_QUALITY_LEVEL)//OPTILIZE IMAGES
                     }
 
                     override fun onPostExecute(result: Boolean?) {
@@ -566,14 +569,14 @@ class TransactionViewActivity : AppCompatActivity() {
         if (requestCode == PERMISSIONS_REQUEST_CAMERA) {
             // If request is cancelled, the result arrays are empty.
             if (grantResults.size > 0 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // permission was granted.
                 captureReceipt()
             } else {
                 // Camera permission rejected, inform user that
                 // no receipt can be taken.
                 Toast.makeText(applicationContext, R.string.noCameraPermissionError,
-                        Toast.LENGTH_LONG).show()
+                    Toast.LENGTH_LONG).show()
             }
         }
     }
