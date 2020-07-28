@@ -16,7 +16,8 @@ import androidx.core.content.FileProvider
 import androidx.core.view.MenuItemCompat
 import java.io.File
 
-class ReceiptViewActivity : AppCompatActivity() {
+class ReceiptViewActivity : AppCompatActivity()
+{
     private var receiptFilename: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +64,9 @@ class ReceiptViewActivity : AppCompatActivity() {
         opt.inJustDecodeBounds = true
         BitmapFactory.decodeFile(receiptFilename, opt)
         shareIntent.type = opt.outMimeType
-        val outputUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, File(receiptFilename))
+        val outputUri = FileProvider.getUriForFile(this,
+            "protect.budgetwatch.fileprovider",
+            File(receiptFilename))
         shareIntent.putExtra(Intent.EXTRA_STREAM, outputUri)
 
         // set flag to give temporary permission to external app to use the FileProvider
@@ -85,3 +88,4 @@ class ReceiptViewActivity : AppCompatActivity() {
         private const val TAG = "BudgetWatch"
     }
 }
+
