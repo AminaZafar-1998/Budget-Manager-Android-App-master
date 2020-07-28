@@ -3,7 +3,6 @@ package protect.budgetwatch
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,13 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ListView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import protect.budgetwatch.DBHelper
 import protect.budgetwatch.Transaction.Companion.toTransaction
 import protect.budgetwatch.TransactionViewActivity
 
-class TransactionFragment : Fragment() {
+class
+TransactionFragment : Fragment() {
     private var _transactionType = 0
     private var _db: DBHelper? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,6 +34,7 @@ class TransactionFragment : Fragment() {
         val searchToUse = arguments.getString("search", null)
         val layout = inflater.inflate(R.layout.list_layout, container, false)
         val listView = layout.findViewById<View>(R.id.list) as ListView
+
         val helpText = layout.findViewById<View>(R.id.helpText) as TextView
         val cursor = _db!!.getTransactions(_transactionType, budgetToDisplay, searchToUse, null, null)
         if (cursor.count > 0) {
@@ -44,15 +46,21 @@ class TransactionFragment : Fragment() {
             val message: String
             if (searchToUse == null) {
                 message = if (budgetToDisplay == null) {
-                    val stringId = if (_transactionType == DBHelper.TransactionDbIds.EXPENSE) R.string.noExpenses else R.string.noRevenues
+                    val stringId = if (_transactionType ==
+                        DBHelper.TransactionDbIds.EXPENSE) R.string.noExpenses
+                    else R.string.noRevenues
                     resources.getString(stringId)
                 } else {
-                    val stringId = if (_transactionType == DBHelper.TransactionDbIds.EXPENSE) R.string.noExpensesForBudget else R.string.noRevenuesForBudget
+                    val stringId = if (_transactionType ==
+                        DBHelper.TransactionDbIds.EXPENSE) R.string.noExpensesForBudget
+                    else R.string.noRevenuesForBudget
                     val base = resources.getString(stringId)
                     String.format(base, budgetToDisplay)
                 }
-            } else {
-                val stringId = if (_transactionType == DBHelper.TransactionDbIds.EXPENSE) R.string.searchEmptyExpenses else R.string.searchEmptyRevenues
+            }
+            else {
+                val stringId = if (_transactionType == DBHelper.TransactionDbIds.EXPENSE)
+                    R.string.searchEmptyExpenses else R.string.searchEmptyRevenues
                 message = resources.getString(stringId)
                 resources.getString(stringId)
             }
