@@ -1,4 +1,3 @@
-@file:Suppress("DEPRECATION")
 package protect.budgetwatch
 import android.Manifest
 import android.app.Activity
