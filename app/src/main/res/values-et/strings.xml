@@ -93,14 +93,6 @@
     <string name="iconDescription">BudgetWatchi ikoon</string>
     <string name="addExpenseDescription">Lisa väljapanek</string>
 
-    <string name="about">Info</string>
-    <string name="app_copyright_fmt">Autoriõigused 2016-<xliff:g>%d</xliff:g> Branden Archer</string>
-    <string name="app_license">Välja antud GPLv3 litsentsi alusel.</string>
-    <string name="about_title_fmt">Info <xliff:g id="app_name">%s kohta</xliff:g></string>
-    <string name="debug_version_fmt">Versioon: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_revision_fmt">Versiooni info: <xliff:g id="app_revision_url">%s</xliff:g></string>
-    <string name="app_libraries"><xliff:g id="app_name">%s</xliff:g> kasutab järgnevaid teiste arendajate poolt loodud teeke: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources"><xliff:g id="app_name">%s</xliff:g> kasutab järgnevaid teiste arendajate poolt loodud ressursse: <xliff:g id="app_resources_list">%s</xliff:g></string>
 
     <string name="settings">Seaded</string>
     <string name="receiptQuality">Kviitungi kvaliteet</string>
