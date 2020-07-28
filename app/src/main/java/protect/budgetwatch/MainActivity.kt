@@ -105,76 +105,12 @@ class MainActivity : AppCompatActivity() {
             startIntro()
             return true
         }
-        if (id == R.id.action_about) {
-            displayAboutDialog()
-            return true
-        }
+       
+         
         return super.onOptionsItemSelected(item)
     }
 
-    private fun displayAboutDialog() {
-        val USED_LIBRARIES: Map<String, String> = ImmutableMap.of(
-                "Commons CSV", "https://commons.apache.org/proper/commons-csv/",
-                "Guava", "https://github.com/google/guava",
-                "AppIntro", "https://github.com/apl-devs/AppIntro"
-        )
-        val USED_ASSETS: Map<String, String> = ImmutableMap.of(
-                "Piggy Bank by Icons8", "https://thenounproject.com/term/piggy-bank/61478/",
-                "Purse by Dima Lagunov", "https://thenounproject.com/term/purse/26896/",
-                "Ticket Bill by naim", "https://thenounproject.com/term/ticket-bill/634398/",
-                "Purchase Order by Icons8", "https://icons8.com/web-app/for/all/purchase-order",
-                "Save by Bernar Novalyi", "https://thenounproject.com/term/save/716011"
-        )
-        val libs = StringBuilder().append("<ul>")
-        for ((key, value) in USED_LIBRARIES) {
-            libs.append("<li><a href=\"").append(value).append("\">").append(key).append("</a></li>")
-        }
-        libs.append("</ul>")
-        val resources = StringBuilder().append("<ul>")
-        for ((key, value) in USED_ASSETS) {
-            resources.append("<li><a href=\"").append(value).append("\">").append(key).append("</a></li>")
-        }
-        resources.append("</ul>")
-        val appName = getString(R.string.app_name)
-        val year = Calendar.getInstance()[Calendar.YEAR]
-        var version = "?"
-        try {
-            val manager = packageManager
-            if (manager != null) {
-                val pi = manager.getPackageInfo(packageName, 0)
-                version = pi.versionName
-            } else {
-                Log.w(TAG, "Package name not found, PackageManager unavailable")
-            }
-        } catch (e: PackageManager.NameNotFoundException) {
-            Log.w(TAG, "Package name not found", e)
-        }
-        val wv = WebView(this)
-        val html = "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />" +
-                "<img src=\"file:///android_res/mipmap/ic_launcher.png\" alt=\"" + appName + "\"/>" +
-                "<h1>" + String.format(getString(R.string.about_title_fmt),
-                "<a href=\"" + getString(R.string.app_webpage_url)) + "\">" +
-                appName +
-                "</a>" +
-                "</h1><p>" +
-                appName +
-                " " + String.format(getString(R.string.debug_version_fmt), version) +
-                "</p><p>" + String.format(getString(R.string.app_revision_fmt),
-                "<a href=\"" + getString(R.string.app_revision_url) + "\">" +
-                        getString(R.string.app_revision_url) +
-                        "</a>") +
-                "</p><hr/><p>" + String.format(getString(R.string.app_copyright_fmt), year) +
-                "</p><hr/><p>" +
-                getString(R.string.app_license) +
-                "</p><hr/><p>" + String.format(getString(R.string.app_libraries), appName, libs.toString()) +
-                "</p><hr/><p>" + String.format(getString(R.string.app_resources), appName, resources.toString())
-        wv.loadDataWithBaseURL("file:///android_res/drawable/", html, "text/html", "utf-8", null)
-        AlertDialog.Builder(this)
-                .setView(wv)
-                .setCancelable(true)
-                .setPositiveButton(R.string.ok) { dialog, which -> dialog.dismiss() }
-                .show()
-    }
+    
 
     private fun startIntro() {
         val intent = Intent(this, IntroActivity::class.java)
