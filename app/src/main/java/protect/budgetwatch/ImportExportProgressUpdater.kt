@@ -9,11 +9,13 @@ import android.app.ProgressDialog
  * An interface for communicating the progress
  * of exporting data to a file.
  */
-open class ImportExportProgressUpdater(private val activity: Activity, private val dialog: ProgressDialog, private val baseMessage: String) {
+open class ImportExportProgressUpdater(private val activity: Activity, private val dialog: ProgressDialog,
+                                       private val baseMessage: String) {
     private var totalEntries: Int? = null
     private var entriesMoved = 0
     private var lastUpdateTimeMs: Long = 0
-    open fun setTotal(totalEntries: Int) {
+    open fun setTotal(totalEntries: Int)
+    {
         this.totalEntries = totalEntries
     }
 
@@ -44,6 +46,7 @@ open class ImportExportProgressUpdater(private val activity: Activity, private v
 
     companion object {
         private const val UPDATE_INTERVAL: Long = 250
+        private const val TAG = "BudgetWatch"
     }
 
-}
+    }
