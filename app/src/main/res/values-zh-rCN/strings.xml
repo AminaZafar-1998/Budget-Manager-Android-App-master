@@ -101,14 +101,6 @@
     <string name="iconDescription">BudgetWatch 图标</string>
     <string name="addExpenseDescription">添加一笔支出交易</string>
 
-    <string name="about">关于</string>
-    <string name="app_copyright_fmt">Copyright 2016-<xliff:g>%d</xliff:g> Branden Archer</string>
-    <string name="app_license">以 GPLv3 授权。</string>
-    <string name="about_title_fmt">关于 <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">版本：<xliff:g id="version">%s</xliff:g></string>
-    <string name="app_revision_fmt">修订版信息：<xliff:g id="app_revision_url">%s</xliff:g></string>
-    <string name="app_libraries"><xliff:g id="app_name">%s</xliff:g> 使用以下第三方库：<xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources"><xliff:g id="app_name">%s</xliff:g> 使用以下第三方资源：<xliff:g id="app_resources_list">%s</xliff:g></string>
 
     <string name="settings">设置</string>
     <string name="receiptQuality">收据照片质量</string>
