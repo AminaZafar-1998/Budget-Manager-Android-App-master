@@ -14,7 +14,8 @@ class SettingsActivity : AppCompatActivity() {
         val toolbar = findViewById<View>(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
-        actionBar?.setDisplayHomeAsUpEnabled(true)
+        if(actionBar != null)
+            actionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Display the fragment as the main content.
         supportFragmentManager.beginTransaction()
@@ -22,17 +23,11 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
     }
 
-    class SettingsFragment : PreferenceFragmentCompat() {
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
+     class SettingsFragment : PreferenceFragmentCompat() {
+         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+             addPreferencesFromResource(R.xml.settings)
+         }
 
-            // Load the preferences from an XML resource
-            addPreferencesFromResource(R.xml.settings)
-        }
-
-        override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-            TODO("Not yet implemented")
-        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
