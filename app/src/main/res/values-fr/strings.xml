@@ -101,14 +101,6 @@
     <string name="iconDescription">icône de BudgetWatch</string>
     <string name="addExpenseDescription">Ajouter une transaction de dépense</string>
 
-    <string name="about">À propos</string>
-    <string name="app_copyright_fmt">Copyright 2016-<xliff:g>%d</xliff:g>Brandon Archer</string>
-    <string name="app_license">Licencié selon la GPLv3</string>
-    <string name="about_title_fmt">À propos <xliff:g id="app_name">%s</xliff:g></string>
-    <string name="debug_version_fmt">Version: <xliff:g id="version">%s</xliff:g></string>
-    <string name="app_revision_fmt">Informations sur les modifications: <xliff:g id="app_revision_url">%s</xliff:g></string>
-    <string name="app_libraries"><xliff:g id="app_name">%s</xliff:g> utilise les librairies tierces suivantes: <xliff:g id="app_libraries_list">%s</xliff:g></string>
-    <string name="app_resources"><xliff:g id="app_name">%s</xliff:g> utilise les ressources tierces suivantes: <xliff:g id="app_resources_list">%s</xliff:g></string>
 
     <string name="settings">Paramètres</string>
     <string name="receiptQuality">Qualité des reçus</string>
